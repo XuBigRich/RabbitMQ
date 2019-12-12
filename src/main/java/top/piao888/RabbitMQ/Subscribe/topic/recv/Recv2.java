@@ -1,4 +1,4 @@
-package top.piao888.RabbitMQ.Subscribe.direct.recv;
+package top.piao888.RabbitMQ.Subscribe.topic.recv;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,9 +14,9 @@ import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 
 public class Recv2 {
 
-    private final static String QUEUE_NAME = "test_queue_work4";
+    private final static String QUEUE_NAME = "test_queue_work6";
 
-    private final static String EXCHANGE_NAME = "test_exchange_direct";
+    private final static String EXCHANGE_NAME = "test_exchange_topic";
 
     public static void main(String[] argv) throws Exception {
 
@@ -24,12 +24,13 @@ public class Recv2 {
         Connection connection = ConnectionUtil.getConnection();
         final Channel channel = connection.createChannel();
         //声明交换机,但是消费者无需声明交换机,可直接用队列绑定已有的交换机,来进行接收路有消息 
-//        channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
         // 声明队列
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
         // 绑定队列到交换机
-        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "error");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "Good.#");
+        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, "*.rabbit.#");
         // 同一时刻服务器只会发一条消息给消费者
         channel.basicQos(1);
 
@@ -42,7 +43,6 @@ public class Recv2 {
 					msg = new String(body, "utf-8");
 					System.out.println(msg);
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}finally {
 					channel.basicAck(envelope.getDeliveryTag(), false);
@@ -51,6 +51,5 @@ public class Recv2 {
         };
         // 监听队列，手动返回完成
         channel.basicConsume(QUEUE_NAME, false, consumer);
-
     }
 }
