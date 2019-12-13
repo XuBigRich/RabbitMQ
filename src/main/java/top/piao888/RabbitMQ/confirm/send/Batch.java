@@ -11,7 +11,7 @@ import com.rabbitmq.client.Envelope;
 import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 
 public class Batch {
-	private final static String QUEUE_NAME = "test_queue_confirm";
+	private final static String QUEUE_NAME = "test_queue_confirm2";
 	public static void main(String[] args) throws Exception {
 		Connection connection=ConnectionUtil.getConnection();
 		Channel channel=connection.createChannel();
