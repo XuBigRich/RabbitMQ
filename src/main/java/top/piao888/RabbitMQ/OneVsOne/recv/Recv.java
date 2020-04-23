@@ -13,7 +13,7 @@ import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 
 public class Recv {
 
-	private final static String QUEUE_NAME = "q_test_01";
+	private final static String QUEUE_NAME = "sys.user.update.queue";
 /**
  * 通过轮询的方式 监听消息
  * @throws Exception
