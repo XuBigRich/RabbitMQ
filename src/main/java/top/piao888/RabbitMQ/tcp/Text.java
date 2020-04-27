@@ -9,15 +9,14 @@ public class Text {
         ServerSocket socket=new ServerSocket(8888);
         Socket s=socket.accept();
         InputStream inputStream=s.getInputStream();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-      /*  while (true) {
-           String ms= reader.readLine();
-            System.out.println(ms);
-        }*/
-        byte[] temp = new byte[1024];
-        int len;
-        while ((len=inputStream.read(temp)) > 0) {
-            System.out.println(temp[1]);
+        StringBuffer stringBuffer=new StringBuffer();
+        while ((inputStream.read()) !=-1) {
+            byte[] temp = new byte[1024];
+            inputStream.read(temp,0,temp.length);
+            String str=new String(temp);
+            stringBuffer.append(str);
+            System.out.println(str);
         }
+        System.out.println(stringBuffer);
     }
 }

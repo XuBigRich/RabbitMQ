@@ -7,6 +7,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
+import org.eclipse.paho.client.mqttv3.internal.wire.MqttConnect;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 /**
@@ -25,7 +26,6 @@ public class ServerMQTT {
     private MqttTopic topic11;
     private String userName = "BigRich";  //非必须
     private String passWord = "123";  //非必须
-
     private MqttMessage message;
 
     /**
@@ -93,7 +93,6 @@ public class ServerMQTT {
         server.publish(server.topic11 , server.message);
         int i=0;
         for(;;){
-            Thread.sleep(2000);
             server.message.setPayload(("abcde"+i).getBytes());
             server.publish(server.topic11 , server.message);
             i++;
