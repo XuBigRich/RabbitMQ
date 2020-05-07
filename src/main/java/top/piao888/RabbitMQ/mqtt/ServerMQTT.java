@@ -18,8 +18,11 @@ public class ServerMQTT {
     //tcp://MQTT安装的服务器地址:MQTT定义的端口号
     public static final String HOST = "tcp://47.104.92.214:1883";
     //定义一个主题
-    public static final String TOPIC = "text/top";
+//    public static final String TOPIC = "text/top";
+    //往taxt主题上面发送消息
+    public static final String TOPIC = "taxt";
     //定义MQTT的ID，可以在MQTT服务配置中指定
+    //MQTT建立一个名为server的队列
     private static final String clientid = "server";
 
     private MqttClient client;
@@ -73,6 +76,7 @@ public class ServerMQTT {
         token.waitForCompletion();
         System.out.println("message is published completely! "
                                    + token.isComplete());
+
     }
 
     /**
@@ -93,7 +97,8 @@ public class ServerMQTT {
         server.publish(server.topic11 , server.message);
         int i=0;
         for(;;){
-            server.message.setPayload(("abcde"+i).getBytes());
+            String message="{\"DevNum\":1,\"SN_\":\"51911220010255\",\"Datetime\":1588927038,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+            server.message.setPayload(message.getBytes());
             server.publish(server.topic11 , server.message);
             i++;
         }
