@@ -33,6 +33,7 @@ public class ServerMQTT {
 
     /**
      * 构造函数
+     *
      * @throws MqttException
      */
     public ServerMQTT() throws MqttException {
@@ -42,7 +43,7 @@ public class ServerMQTT {
     }
 
     /**
-     *  用来连接服务器
+     * 用来连接服务器
      */
     private void connect() {
         MqttConnectOptions options = new MqttConnectOptions();
@@ -64,23 +65,23 @@ public class ServerMQTT {
     }
 
     /**
-     *
      * @param topic
      * @param message
      * @throws MqttPersistenceException
      * @throws MqttException
      */
-    public void publish(MqttTopic topic , MqttMessage message) throws MqttPersistenceException,
+    public void publish(MqttTopic topic, MqttMessage message) throws MqttPersistenceException,
             MqttException {
         MqttDeliveryToken token = topic.publish(message);
         token.waitForCompletion();
         System.out.println("message is published completely! "
-                                   + token.isComplete());
+                + token.isComplete());
 
     }
 
     /**
-     *  启动入口
+     * 启动入口
+     *
      * @param args
      * @throws MqttException
      */
@@ -90,17 +91,23 @@ public class ServerMQTT {
         server.message.setQos(2);  //保证消息能到达一次
         server.message.setRetained(true);
         server.message.setPayload("abcde1".getBytes());
-        server.publish(server.topic11 , server.message);
+//        server.publish(server.topic11 , server.message);
 //        Thread.sleep(300000);
         Thread.sleep(2000);
         server.message.setPayload("abcde2".getBytes());
-        server.publish(server.topic11 , server.message);
-        int i=0;
-        for(;;){
-            String message="{\"DevNum\":1,\"SN_\":\"51911220010255\",\"Datetime\":1588927038,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+//        server.publish(server.topic11 , server.message);
+        int i = 0;
+        for (; ; ) {
+//            String message = "{\"DevNum\":1,\"SN_\":\"51911220010255\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":158.98,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+//
+            String message="{\"DevNum\":1,\"SN_\":\"51911220010256\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":185.0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+            String message1="{\"DevNum\":2,\"SN_\":\"51911220010256\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":50,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+
             server.message.setPayload(message.getBytes());
-            server.publish(server.topic11 , server.message);
-            i++;
+            server.publish(server.topic11, server.message);
+            server.message.setPayload(message1.getBytes());
+            server.publish(server.topic11, server.message);
+//            i++;
         }
 //        System.out.println(server.message.isRetained() + "------ratained状态");
     }
