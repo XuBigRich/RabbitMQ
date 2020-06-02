@@ -15,7 +15,7 @@ public class ClientMQTT {
 
     public static final String HOST = "tcp://47.104.92.214:1883";
     public static final String TOPIC1 = "taxt";
-    private static final String clientid = "client";
+    private static final String clientid = "server";
     private MqttClient client;
     private MqttConnectOptions options;
     private String userName = "Text";    //非必须
