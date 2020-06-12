@@ -23,7 +23,7 @@ public class Recv {
 		Connection connection = ConnectionUtil.getConnection();
 		final Channel channel = connection.createChannel();
 		// 声明交换机,但是消费者无需声明交换机,可直接用队列绑定已有的交换机,来进行接收路有消息
-		channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+		channel.exchangeDeclare(EXCHANGE_NAME, "topic",true);
 		// 声明队列
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 

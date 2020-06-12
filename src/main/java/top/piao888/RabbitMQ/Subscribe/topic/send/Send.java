@@ -11,7 +11,8 @@ import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 	*/
 public class Send {
 	//start
-    private final static String EXCHANGE_NAME = "test_exchange_topic";
+//    private final static String EXCHANGE_NAME = "test_exchange_topic";
+    private final static String EXCHANGE_NAME = "amq.topic";
     //end
     public static void main(String[] argv) throws Exception {
         // 获取到连接以及mq通道
@@ -19,7 +20,7 @@ public class Send {
         Channel channel = connection.createChannel();
 
         // 声明exchange  “fanout"是交换机类型
-        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic",true);
 
         // 消息内容
         String message1 = "Good.insert";
@@ -32,6 +33,8 @@ public class Send {
         channel.basicPublish(EXCHANGE_NAME, "Rich.Good.rabbit.insert", null, message3.getBytes());
         channel.basicPublish(EXCHANGE_NAME, "Good.rabbit.insert", null, message4.getBytes());
         channel.basicPublish(EXCHANGE_NAME, "rabbit.insert", null, message5.getBytes());
+        byte[] bytes={-96,0};
+        channel.basicPublish(EXCHANGE_NAME, "top", null,bytes) ;
 
         channel.close();
         connection.close();

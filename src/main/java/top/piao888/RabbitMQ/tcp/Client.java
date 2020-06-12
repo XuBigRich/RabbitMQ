@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-package top.piao888.RabbitMQ.tcp;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-
-public class Client {
-    public static void main(String[] args) throws IOException {
-        Socket socket=new Socket("127.0.0.1",8888);
-        OutputStream outputStream =socket.getOutputStream();
-        byte a=-0x7f;
-        byte[] bytes={1,0xf,3};
-        outputStream.write(bytes);
-    }
-}
-=======
 package top.piao888.RabbitMQ.tcp;
 
 import com.sun.xml.internal.ws.util.ByteArrayBuffer;
@@ -41,6 +24,10 @@ public class Client {
         }
         System.out.println(stringBuffer);
     */
+        /*Socket socket=new Socket("127.0.0.1",8888);
+        OutputStream outputStream =socket.getOutputStream();
+        byte a=-0x7f;
+        byte[] bytes={1,0xf,3};
+        outputStream.write(bytes);*/
     }
 }
->>>>>>> dadfd620691837c3346020c313c4399e209a3a5f

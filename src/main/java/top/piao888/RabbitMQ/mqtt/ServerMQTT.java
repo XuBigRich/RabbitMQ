@@ -16,18 +16,19 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class ServerMQTT {
     //tcp://MQTT安装的服务器地址:MQTT定义的端口号
     public static final String HOST = "tcp://47.104.92.214:1883";
+    //    public static final String HOST = "tcp://localhost:1883";
 //    public static final String HOST = "tcp://192.168.1.114:1883";
     //定义一个主题
-//    public static final String TOPIC = "text/top";
+    public static final String TOPIC = "top";
     //往taxt主题上面发送消息
-    public static final String TOPIC = "taxt";
+//    public static final String TOPIC = "taxt";
     //定义MQTT的ID，可以在MQTT服务配置中指定
     //MQTT建立一个名为server的队列
     private static final String clientid = "server";
 
     private MqttClient client;
     private MqttTopic topic11;
-//    private String userName = "test";  //非必须
+    //    private String userName = "test";  //非必须
 //    private String passWord = "test";  //非必须
     private String userName = "BigRich";  //非必须
     private String passWord = "123";  //非必须
@@ -89,8 +90,6 @@ public class ServerMQTT {
      */
     public static void main(String[] args) throws MqttException, InterruptedException {
         try {
-
-
             ServerMQTT server = new ServerMQTT();
             server.message = new MqttMessage();
             server.message.setQos(2);  //保证消息能到达一次
@@ -113,7 +112,7 @@ public class ServerMQTT {
                 server.message.setPayload(message1.getBytes());
                 server.publish(server.topic11, server.message);
                 i++;
-                if(i==100000){
+                if (i == 100000) {
                     break;
                 }
             }

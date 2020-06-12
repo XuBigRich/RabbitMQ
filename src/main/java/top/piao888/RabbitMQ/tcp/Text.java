@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package top.piao888.RabbitMQ.tcp;
 
 import java.io.*;
@@ -20,17 +19,7 @@ public class Text {
         while ((len=inputStream.read(temp)) > 0) {
             System.out.println(temp[1]);
         }
-    }
-}
-=======
-package top.piao888.RabbitMQ.tcp;
-
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-public class Text {
-    public static void main(String[] args) throws IOException {
+/*
         ServerSocket socket=new ServerSocket(8888);
         Socket s=socket.accept();
         InputStream inputStream=s.getInputStream();
@@ -42,7 +31,6 @@ public class Text {
             stringBuffer.append(str);
             System.out.println(str);
         }
-        System.out.println(stringBuffer);
+        System.out.println(stringBuffer);*/
     }
 }
->>>>>>> dadfd620691837c3346020c313c4399e209a3a5f
