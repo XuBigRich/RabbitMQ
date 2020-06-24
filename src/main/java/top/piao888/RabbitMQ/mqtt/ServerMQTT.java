@@ -55,43 +55,66 @@ public class ServerMQTT {
         connect();
     }
 
-    /**
-     * 用来连接服务器
-     */
-    private void connect() {
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setCleanSession(false);
-        options.setUserName(userName);
-        options.setPassword(passWord.toCharArray());
-        // 设置超时时间
-        options.setConnectionTimeout(10);
-        // 设置会话心跳时间
-        options.setKeepAliveInterval(20);
-        try {
-            client.setCallback(new PushCallback());
-            client.connect(options);
 
-            topic11 = client.getTopic(TOPIC);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * 用来连接服务器
+	 */
+	private void connect() {
+		MqttConnectOptions options = new MqttConnectOptions();
+		options.setCleanSession(false);
+		options.setUserName(userName);
+		options.setPassword(passWord.toCharArray());
+		// 设置超时时间
+		options.setConnectionTimeout(10);
+		// 设置会话心跳时间
+		options.setKeepAliveInterval(20);
+		try {
+			client.setCallback(new PushCallback());
+			client.connect(options);
 
-    /**
-     * @param topic
-     * @param message
-     * @throws MqttPersistenceException
-     * @throws MqttException
-     */
-    public void publish(MqttTopic topic, MqttMessage message) throws MqttPersistenceException,
-            MqttException {
-        MqttDeliveryToken token = topic.publish(message);
-        token.waitForCompletion();
-        System.out.println("message is published completely! "
-                + token.isComplete());
+			if(topic11==null) {
+				topic11 = client.getTopic(TOPIC);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    }
+	/**
+	 * @param topic
+	 * @param message
+	 * @throws MqttPersistenceException
+	 * @throws MqttException
+	 */
+	public void publish(MqttTopic topic, MqttMessage message) throws MqttPersistenceException, MqttException {
+		MqttDeliveryToken token = topic.publish(message);
+		token.waitForCompletion();
+		System.out.println("message is published completely! " + token.isComplete());
 
+	}
+	public void setMessage(MqttMessage mq) {
+		this.message=mq;
+	}
+	public MqttMessage getMessage() {
+		return message;
+	}
+	public MqttTopic getTopic() {
+		return topic11;
+	}
+	public static void connetStar(String message) {
+		ServerMQTT server;
+		try {
+			server = new ServerMQTT();
+			server.message = new MqttMessage();
+			server.message.setQos(2); // 保证消息能到达一次
+			server.message.setRetained(true);
+			server.message.setPayload(message.getBytes());
+			server.publish(server.topic11, server.message);
+		} catch (MqttException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
     /**
      * 启动入口
      *
@@ -130,5 +153,10 @@ public class ServerMQTT {
         }
         System.exit(0);
 //        System.out.println(server.message.isRetained() + "------ratained状态");
+        //后来版本
+        String message = "{\"DevNum\":1,\"SN_\":\"1234\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":185.0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+		String message1 = "{\"DevNum\":2,\"SN_\":\"1234\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":50,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+		connetStar(message);
     }
+
 }
