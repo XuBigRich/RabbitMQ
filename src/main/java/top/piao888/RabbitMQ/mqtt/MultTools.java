@@ -18,7 +18,7 @@ public class MultTools implements Runnable {
 		serverMQTT.getMessage().setRetained(true);
 		try {
 			while(true) {
-				serverMQTT.publish(ServerMQTT.topic11, serverMQTT.getMessage());
+				serverMQTT.publish(serverMQTT.getTopic(), serverMQTT.getMessage());
 			}
 		} catch (MqttPersistenceException e) {
 			// TODO Auto-generated catch block

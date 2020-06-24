@@ -9,6 +9,20 @@ public class Text {
         ServerSocket socket=new ServerSocket(8888);
         Socket s=socket.accept();
         InputStream inputStream=s.getInputStream();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+      /*  while (true) {
+           String ms= reader.readLine();
+            System.out.println(ms);
+        }*/
+        byte[] temp = new byte[1024];
+        int len;
+        while ((len=inputStream.read(temp)) > 0) {
+            System.out.println(temp[1]);
+        }
+/*
+        ServerSocket socket=new ServerSocket(8888);
+        Socket s=socket.accept();
+        InputStream inputStream=s.getInputStream();
         StringBuffer stringBuffer=new StringBuffer();
         while ((inputStream.read()) !=-1) {
             byte[] temp = new byte[1024];
@@ -17,6 +31,6 @@ public class Text {
             stringBuffer.append(str);
             System.out.println(str);
         }
-        System.out.println(stringBuffer);
+        System.out.println(stringBuffer);*/
     }
 }
