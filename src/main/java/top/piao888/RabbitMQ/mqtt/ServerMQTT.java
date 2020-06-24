@@ -20,22 +20,32 @@ public class ServerMQTT {
 //    public static final String HOST = "tcp://192.168.1.114:1883";
     //定义一个主题
     public static final String TOPIC = "top";
-    //往taxt主题上面发送消息
-//    public static final String TOPIC = "taxt";
-    //定义MQTT的ID，可以在MQTT服务配置中指定
-    //MQTT建立一个名为server的队列
+    /**
+     * 定义MQTT的ID，可以在MQTT服务配置中指定
+     * MQTT建立一个名为server的队列  绝对唯一
+     */
     private static final String clientid = "server";
-
+    /**
+     * mqtt要连接的客户端方
+     */
     private MqttClient client;
+    /**
+     * mqtt消息要通过这个主题发送出去
+     */
     private MqttTopic topic11;
-    //    private String userName = "test";  //非必须
-//    private String passWord = "test";  //非必须
-    private String userName = "BigRich";  //非必须
-    private String passWord = "123";  //非必须
+    /**
+     * mqtt报文中要传的用户名 非必须
+     */
+    private String userName = "BigRich";
+    /**
+     * mqtt报文中要传的密码 非必须
+     */
+    private String passWord = "123";
     private MqttMessage message;
 
     /**
      * 构造函数
+     * 主要用以和客户端建立连接
      *
      * @throws MqttException
      */
@@ -104,8 +114,8 @@ public class ServerMQTT {
             for (; ; ) {
 //            String message = "{\"DevNum\":1,\"SN_\":\"51911220010255\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":158.98,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
 //
-                String message = "{\"DevNum\":1,\"SN_\":\"51911220010256\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":185.0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
-                String message1 = "{\"DevNum\":2,\"SN_\":\"51911220010256\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":50,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+                String message = "{\"DevNum\":1,\"SN_\":\"1234\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":185.0,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
+                String message1 = "{\"DevNum\":2,\"SN_\":\"1234\",\"Datetime\":1588993563,\"RealTime-Data\":{\"Ua\":220.1,\"Ub\":0,\"Uc\":0,\"Ia\":0.04,\"Ib\":0.04,\"Ic\":0.05,\"In\":0.08,\"P\":50,\"Q\":0,\"PF\":1,\"Wh\":20.67,\"Varh\":2.77,\"Ta\":6503.6,\"Tb\":6503.6,\"Tc\":6503.6,\"FWh\":19.08,\"BWh\":1954}} ";
 
                 server.message.setPayload(message.getBytes());
                 server.publish(server.topic11, server.message);
