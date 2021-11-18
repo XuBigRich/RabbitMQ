@@ -13,7 +13,7 @@ import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 
 public class Recv {
 
-	private final static String QUEUE_NAME = "sys.user.update.queue";
+	private final static String QUEUE_NAME = "q_test_01";
 /**
  * 通过轮询的方式 监听消息
  * @throws Exception
@@ -43,24 +43,36 @@ public class Recv {
 	 * 通过监听的方式 接收消息
 	 * @throws Exception
 	 */
-	public static void newMethod() throws Exception {
+	public  void newMethod(){
+		if(QUEUE_NAME!=null){
+
+		}
 		// 获取到连接以及mq通道
-		Connection connection = ConnectionUtil.getConnection();
+		Connection connection = null;
+		try {
+			connection = ConnectionUtil.getConnection();
+
 		// 从连接中创建通道
-		Channel channel = connection.createChannel();
+		final Channel channel = connection.createChannel();
+		channel.basicQos(50);
 		// 声明队列
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 		// 消息堵塞在这
 		DefaultConsumer consumer = new DefaultConsumer(channel) {
 			//当收到消息后 触发这个功能
+			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 					byte[] body) throws IOException {
 				String msg=new String(body,"utf-8");
 				System.out.println(msg);
+				channel.basicAck(envelope.getDeliveryTag(), false);
 			}
 		};
 		// 监听队列
-		channel.basicConsume(QUEUE_NAME, true, consumer);
+		channel.basicConsume(QUEUE_NAME, false, consumer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] argv) throws Exception {

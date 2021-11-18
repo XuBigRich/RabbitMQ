@@ -3,6 +3,8 @@ package top.piao888.RabbitMQ.Subscribe.direct.recv;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -16,7 +18,9 @@ import top.piao888.RabbitMQ.Utill.ConnectionUtil;
 /*注意：消息发送到没有队列绑定的交换机时，消息将丢失，因为，交换机没有存储消息的能力，消息只能存在在队列中。*/
 public class Recv {
 
-	private final static String QUEUE_NAME = "test_queue_work3";
+//	private final static String QUEUE_NAME = "test_queue_work3";
+
+    private final static String QUEUE_NAME = "test";
 
     private final static String EXCHANGE_NAME = "test_exchange_direct";
 
@@ -28,6 +32,7 @@ public class Recv {
         //声明交换机,但是消费者无需声明交换机,可直接用队列绑定已有的交换机,来进行接收路有消息 
 //        channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
         // 声明队列
+
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
         // 绑定队列到交换机  并设置路由键，路由键可以绑定 多个

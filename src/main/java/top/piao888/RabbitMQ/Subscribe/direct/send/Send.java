@@ -18,7 +18,7 @@ public class Send {
         Connection connection = ConnectionUtil.getConnection();
         Channel channel = connection.createChannel();
 
-        // 声明exchange  “fanout"是交换机类型
+        // 声明exchange  “direct"是交换机类型
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
 
         // 消息内容
