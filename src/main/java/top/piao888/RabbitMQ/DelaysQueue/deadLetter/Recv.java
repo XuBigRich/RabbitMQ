@@ -1,4 +1,4 @@
-package top.piao888.RabbitMQ.DelaysQueue.recv;
+package top.piao888.RabbitMQ.DelaysQueue.deadLetter;
 
 import com.rabbitmq.client.*;
 import top.piao888.RabbitMQ.Utill.ConnectionUtil;
@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Recv {
     static final String EXCHANGE = "base_exchange";
     static final String deadLetter = "dead_letter_query";
+
     static Connection connection;
     static Channel channel;
 

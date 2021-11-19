@@ -1,15 +1,10 @@
-package top.piao888.RabbitMQ.DelaysQueue.send;
+package top.piao888.RabbitMQ.DelaysQueue.deadLetter;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.impl.AMQImpl;
-import sun.misc.Launcher;
-import top.piao888.RabbitMQ.DelaysQueue.recv.Recv;
 import top.piao888.RabbitMQ.Utill.ConnectionUtil;
-
 import java.io.IOException;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,17 +109,17 @@ public class Send {
         sixBuilder.expiration(six + "000");
         AMQP.BasicProperties sixProperties = sixBuilder.build();
         channel.basicPublish(EXCHANGE, common_routing_key, true, sixProperties, (six + "秒的消息").getBytes());
-        System.out.println(six + "秒的消息，发送成功");
+        System.out.println(six + "秒的消息，先发送成功");
 
-        //再发送一个三秒的消息，但是处理者只会处理6秒，三秒的在他发送时，会判断该消息已经失效所以不会被消费
+        //再发送一个三秒的消息，理论上消费者应该先消费这个三秒的消息、但是因为原生的队列，遵循先进先出，所以，他会在6秒的那条消息上面停住
         int three = 3;
         AMQP.BasicProperties.Builder threeBuilder = new AMQP.BasicProperties.Builder();
         threeBuilder.expiration(three + "000");
         AMQP.BasicProperties threeProperties = threeBuilder.build();
         channel.basicPublish(EXCHANGE, common_routing_key, true, threeProperties, (three + "秒的消息").getBytes());
-        System.out.println(three + "秒的消息，发送成功");
+        System.out.println(three + "秒的消息，后发送成功");
 
         System.out.println("理论上 3秒的消息先被消费者消费");
-        System.out.println("但是实际上，他会按照顺序，等十秒过期后，才去判断3秒的消息是否过期，移入死信队列，这样在常规业务流程中肯定是不行的");
+        System.out.println("但是实际上，他会按照顺序，等6秒过期后，才去判断3秒的消息是否过期，移入死信队列，这样在常规业务流程中肯定是不行的");
     }
 }
