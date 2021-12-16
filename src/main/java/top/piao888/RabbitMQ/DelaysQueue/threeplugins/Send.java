@@ -63,7 +63,8 @@ public class Send {
         c.newInstance();
         //验证死信队列实现延迟队列的缺陷
         //先发送一个6秒的消息
-        long six = 6000;
+        //mq的一个bug 如果时间太大，大到mq超过的一个时间段，那么就会失效，消息将立刻发出
+        long six = 22222222222222L;
         byte[] sixMessageBodyBytes = "six second delayed".getBytes("UTF-8");
         Map<String, Object> sixHeaders = new HashMap<String, Object>();
         sixHeaders.put("x-delay", six);
